@@ -1,0 +1,67 @@
+<Project>
+  <PropertyGroup>
+    <TestPlatformPackageDir>$([MSBuild]::NormalizeDirectory('$(RepoRoot)', 'packages'))</TestPlatformPackageDir>
+    <ResourceDirectory>$([MSBuild]::NormalizeDirectory('$(MSBuildProjectDirectory)', 'Resources'))</ResourceDirectory>
+
+    <ProductProject Condition="'$(IsTestProject)' != 'true'">true</ProductProject>
+
+    <!-- LocalizeResources is set only when xlf files are synced or resx are generated -->
+    <LocalizeResources Condition="'$(LocalizeResources)' == ''">false</LocalizeResources>
+
+    <!-- LocalizedBuild is set when non english resources are included in build process -->
+    <LocalizedBuild Condition="'$(LocalizedBuild)' == ''">false</LocalizedBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ResxLang Include="cs;de;es;fr;it;ja;ko;pl;pt-BR;ru;tr;zh-Hans;zh-Hant" />
+  </ItemGroup>
+
+  <!-- In case of LocalizedBuild, EmbeddedResource contains just english resources to allow sync and
+       generation. Otherwise, let EmbeddedResource contain all resx files (regular build) -->
+  <ItemGroup Condition="'$(ProductProject)' == 'true' and '$(LocalizedBuild)' == 'true'">
+    <!-- Union of already specified EmbeddedResource and Resources\*resx (localized resx) -->
+    <_CopyOfResources Include="@(EmbeddedResource)" />
+    <EmbeddedResource Include="$(ResourceDirectory)*.resx" Exclude="@(_CopyOfResources)" />
+  </ItemGroup>
+
+  <Target Name="Localize"
+          Condition="'$(ProductProject)' == 'true' and @(EmbeddedResource) != ''"
+          DependsOnTargets="_CreateLocalizeXLF;_CreateLocalizeResx" />
+
+  <Target Name="_CreateLocalizeXLF">
+    <Message Importance="High" Text="Create localized xlf for '$(AssemblyName)'" />
+    
+    <ItemGroup>
+      <LocResourceFile Include="@(EmbeddedResource)" Language="%(ResxLang.Identity)" />
+    </ItemGroup>
+
+    <!-- Create language based xlf files -->
+    <Exec Command="$(TestPlatformPackageDir)fmdev.xlftool\0.1.3\tools\xlftool.exe update -Resx %(LocResourceFile.Identity) -Xlf $(ResourceDirectory)xlf\%(LocResourceFile.Filename).%(LocResourceFile.Language).xlf"
+          Condition="'%(LocResourceFile.Filename)' != 'DefaultCodeCoverageConfig' and
+                     '%(LocResourceFile.Filename)' != 'html'"/>
+
+    <!-- Create neutral xlf -->
+    <Exec Command="$(TestPlatformPackageDir)fmdev.xlftool\0.1.3\tools\xlftool.exe update -Resx %(EmbeddedResource.Identity) -Xlf $(ResourceDirectory)xlf\%(EmbeddedResource.Filename).xlf"
+          Condition="'%(EmbeddedResource.Filename)' != 'DefaultCodeCoverageConfig' and
+                     '%(EmbeddedResource.Filename)' != 'html'"/>
+  </Target>
+
+  <Target Name="_CreateLocalizeResx">
+    <Message Importance="High" Text="Create localized resx for '$(AssemblyName)'" />
+
+    <ItemGroup>
+      <LocResourceFile Include="@(EmbeddedResource)"
+                       Language="%(ResxLang.Identity)"
+                       Condition="'@(LocResourceFile)' == ''" />
+    </ItemGroup>
+
+    <!-- Convert language specific xlf files to resx -->
+    <Exec Command="$(TestPlatformPackageDir)fmdev.xlftool\0.1.3\tools\xlftool.exe  writeTarget -Xlf $(ResourceDirectory)xlf\%(LocResourceFile.Filename).%(LocResourceFile.Language).xlf -Resx $(ResourceDirectory)\%(LocResourceFile.Filename).%(LocResourceFile.Language).resx -verbose"
+          Condition="'%(LocResourceFile.Filename)' != 'DefaultCodeCoverageConfig' and
+                     '%(LocResourceFile.Filename)' != 'html'"/>
+
+    <ItemGroup>
+      <EmbeddedResource Include="$(ResourceDirectory)%(LocResourceFile.Filename).%(LocResourceFile.Language).resx" />
+    </ItemGroup>
+  </Target>
+</Project>

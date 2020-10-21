@@ -1,28 +1,22 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TestPlatformRoot Condition="$(TestPlatformRoot) == ''">..\..\</TestPlatformRoot>
-    <TestProject>true</TestProject>
-  </PropertyGroup>
-  <Import Project="$(TestPlatformRoot)scripts/build/TestPlatform.Settings.targets" />
-  <PropertyGroup>
     <OutputType Condition=" '$(TargetFramework)' == 'netcoreapp2.1' ">Exe</OutputType>
     <TargetFrameworks>netcoreapp2.1;net451</TargetFrameworks>
-    <AssemblyName>Microsoft.TestPlatform.ObjectModel.PlatformTests</AssemblyName>
   </PropertyGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\Microsoft.TestPlatform.TestUtilities\Microsoft.TestPlatform.TestUtilities.csproj" />    
   </ItemGroup>
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net451' ">
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net451'">
     <Reference Include="System" />
     <Reference Include="System.Runtime" />
     <Reference Include="Microsoft.CSharp" />
+    <PackageReference Include="Microsoft.Internal.Dia" Version="14.0.0" GeneratePathProperty="true" />
+  </ItemGroup>
 
-    <PackageReference Include="Microsoft.Internal.Dia" Version="14.0.0" />
+  <ItemGroup Condition="'$(TargetFramework)' == 'net451'">
+    <Content Include="$(PkgMicrosoft_Internal_Dia)\contentFiles\any\any\ComComponents\**\*"
+             CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="..\..\packages\microsoft.internal.dia\14.0.0\contentFiles\any\any\ComComponents\**\*">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <Import Project="$(TestPlatformRoot)scripts\build\TestPlatform.targets" />
 </Project>

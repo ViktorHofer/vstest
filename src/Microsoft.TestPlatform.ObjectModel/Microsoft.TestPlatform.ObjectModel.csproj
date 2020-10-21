@@ -1,39 +1,31 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TestPlatformRoot Condition="$(TestPlatformRoot) == ''">..\..\</TestPlatformRoot>
-  </PropertyGroup>
-  <Import Project="$(TestPlatformRoot)scripts/build/TestPlatform.Settings.targets" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyName>Microsoft.VisualStudio.TestPlatform.ObjectModel</AssemblyName>
-    <TargetFrameworks>net451;netstandard2.0;netstandard1.3</TargetFrameworks>
-    <TargetFrameworks Condition=" '$(DotNetBuildFromSource)' == 'true' ">netstandard2.0;netstandard1.3</TargetFrameworks>
+    <RootNamespace>Microsoft.VisualStudio.TestPlatform.ObjectModel</RootNamespace>
     <PackageId>Microsoft.TestPlatform.ObjectModel</PackageId>
+    <TargetFrameworks>net451;netstandard2.0;netstandard1.3</TargetFrameworks>
   </PropertyGroup>
+
   <ItemGroup>
     <EmbeddedResource Include="Resources\Resources.resx;Resources\CommonResources.resx" />
   </ItemGroup>
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net451' ">
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Runtime" />
-    <Reference Include="System.IO" />
-    <Reference Include="System" />
-    <Reference Include="Microsoft.CSharp" />
-  </ItemGroup>
+
   <ItemGroup>
     <None Include="Resources\CommonResources.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Resources\CommonResources.resx</LastGenOutput>
     </None>
   </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\Microsoft.TestPlatform.CoreUtilities\Microsoft.TestPlatform.CoreUtilities.csproj" />
   </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="System.Reflection.Metadata" Version="1.6.0" />
   </ItemGroup>
-  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.3'" >
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.3'">
     <PackageReference Include="System.ComponentModel.EventBasedAsync" Version="4.3.0" />
     <PackageReference Include="System.ComponentModel.TypeConverter" Version="4.3.0" />
     <PackageReference Include="System.Reflection.TypeExtensions" Version="4.3.0" />
@@ -44,9 +36,11 @@
     <PackageReference Include="System.Xml.XPath.XmlDocument" Version="4.3.0" />
     <PackageReference Include="NuGet.Frameworks" Version="4.6.4" />
   </ItemGroup>
-  <ItemGroup Condition=" '$(TargetFramework)' != 'netstandard1.3' ">
+
+  <ItemGroup Condition="'$(TargetFramework)' != 'netstandard1.3'">
     <PackageReference Include="NuGet.Frameworks" Version="$(NuGetFrameworksVersion)" />
   </ItemGroup>
+
   <ItemGroup>
     <Compile Update="Resources\CommonResources.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -59,6 +53,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
   </ItemGroup>
+
   <ItemGroup>
     <EmbeddedResource Update="Resources\CommonResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -70,11 +65,4 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
-  </ItemGroup>
-  <PropertyGroup Label="Configuration">
-    <RootNamespace>Microsoft.VisualStudio.TestPlatform.ObjectModel</RootNamespace>
-  </PropertyGroup>
-  <Import Project="$(TestPlatformRoot)scripts\build\TestPlatform.targets" />
 </Project>

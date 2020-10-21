@@ -1,0 +1,8 @@
+<Project>
+  <!-- Static analysis dependencies -->
+  <ItemGroup Condition="$(EnableCodeAnalysis) == 'true' and '$(DotNetBuildFromSource)' != 'true'" >
+    <PackageReference Include="StyleCop.Analyzers" Version="1.0.1" PrivateAssets="all" />
+  </ItemGroup>
+
+  <Import Project="$(RepositoryEngineeringDir)TestPlatform.Localization.targets" />
+</Project>

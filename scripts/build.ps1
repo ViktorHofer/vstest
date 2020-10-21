@@ -302,7 +302,7 @@ function Publish-Package
     $netstandard20PackageDir = $(Join-Path $env:TP_OUT_DIR "$TPB_Configuration\$TPB_TargetFrameworkNS2_0");
     $coreCLR20PackageDir = Get-CoreCLR20PackageDirectory
     $coreCLR20TestHostPackageDir = Get-CoreCLR20TestHostPackageDirectory
-    $packageProject = Join-Path $env:TP_PACKAGE_PROJ_DIR "package\package.csproj"
+    $packageProject = Join-Path $env:TP_PACKAGE_PROJ_DIR "package\package.proj"
     $testHostProject = Join-Path $env:TP_ROOT_DIR "src\testhost\testhost.csproj"
     $testHostx86Project = Join-Path $env:TP_ROOT_DIR "src\testhost.x86\testhost.x86.csproj"
     
@@ -324,7 +324,7 @@ function Publish-Package
     $settingsMigratorProject = Join-Path $env:TP_ROOT_DIR "src\SettingsMigrator\SettingsMigrator.csproj"
     $dataCollectorProject = Join-Path $env:TP_ROOT_DIR "src\datacollector\datacollector.csproj"
 
-    Write-Log "Package: Publish src\package\package\package.csproj"
+    Write-Log "Package: Publish src\package\package\package.proj"
     Publish-PackageInternal $packageProject $TPB_TargetFramework $fullCLRPackageDir
     Publish-PackageInternal $packageProject $TPB_TargetFrameworkCore20 $coreCLR20PackageDir
     

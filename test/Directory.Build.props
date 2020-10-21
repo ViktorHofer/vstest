@@ -1,0 +1,41 @@
+<Project>
+  <Import Project="..\Directory.Build.props" />
+
+  <PropertyGroup>
+    <IsTestProject>true</IsTestProject>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <!-- Test project settings -->
+  <PropertyGroup>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <CodeAnalysisRuleSet>$(RepositoryScriptsDir)stylecop.test.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
+  <!-- Test projects are not discovered in test window without test container capability -->
+  <ItemGroup>
+    <ProjectCapability Include="TestContainer" />
+  </ItemGroup>
+
+  <!-- Test project references -->
+  <ItemGroup>
+    <!-- Test projects take a direct dependency on TestHost. Indirect dependencies must be included.
+          This is required to enable selfhost the latest testhost bits.
+
+          We don't want these references to be passed onto compiler. They are just required at runtime.
+          Mark them as content and copy to output directory.
+    -->
+    <ProjectReference Include="$(RepositorySrcDir)testhost\testhost.csproj;
+                                $(RepositorySrcDir)Microsoft.TestPlatform.CommunicationUtilities\Microsoft.TestPlatform.CommunicationUtilities.csproj;
+                                $(RepositorySrcDir)Microsoft.TestPlatform.CrossPlatEngine\Microsoft.TestPlatform.CrossPlatEngine.csproj;
+                                $(RepositorySrcDir)Microsoft.TestPlatform.Common\Microsoft.TestPlatform.Common.csproj;
+                                $(RepositorySrcDir)Microsoft.TestPlatform.ObjectModel\Microsoft.TestPlatform.ObjectModel.csproj"
+                      FromP2P="true" />
+
+    <PackageReference Include="MSTest.TestFramework" Version="$(MSTestFrameworkVersion)" />
+    <PackageReference Include="MSTest.TestAdapter" Version="$(MSTestAdapterVersion)" />
+    <PackageReference Include="Moq" Version="$(MoqVersion)" />
+    <PackageReference Include="MSTest.Assert.Extensions" Version="$(MSTestAssertExtensionVersion)" />
+    <PackageReference Include="Microsoft.CodeCoverage" Version="1.0.3" />
+  </ItemGroup>
+</Project>

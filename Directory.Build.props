@@ -1,0 +1,60 @@
+<Project>
+  <PropertyGroup>
+    <RepoRoot>$([MSBuild]::EnsureTrailingSlash('$(MSBuildThisFileDirectory)'))</RepoRoot>
+    <RepositoryScriptsDir>$([MSBuild]::NormalizeDirectory('$(RepoRoot)', 'scripts'))</RepositoryScriptsDir>
+    <RepositoryEngineeringDir>$([MSBuild]::NormalizeDirectory('$(RepoRoot)', 'eng'))</RepositoryEngineeringDir>
+    <RepositorySrcDir>$([MSBuild]::NormalizeDirectory('$(RepoRoot)', 'src'))</RepositorySrcDir>
+
+    <Company>Microsoft Corporation</Company>
+    <Copyright>© Microsoft Corporation. All rights reserved.</Copyright>
+
+    <!-- Turn off end of life target framework checks as we intentionally build older .NETCoreApp configurations. -->
+    <CheckEolTargetFramework>false</CheckEolTargetFramework>
+
+    <DisableImplicitNuGetFallbackFolder>true</DisableImplicitNuGetFallbackFolder>
+    <SuppressNETCoreSdkPreviewMessage>true</SuppressNETCoreSdkPreviewMessage>
+
+    <!-- This version is read by vsts-prebuild.ps1 and is a base for the current version, this should be updated
+    at the start of new iteration to the goal number. This is also used to version the local packages. This version needs to be statically
+    readable when we read the file as xml, don't move it to a .props file, unless you change the build server process -->
+    <TPVersionPrefix>16.9.0</TPVersionPrefix>
+
+    <!-- Versioning is defined from the build script. Use a default dev build if it's not defined.
+         Sets the AssemblyVersion, AssemblyFileVersion and AssemblyInformationalVersion -->
+    <Version Condition="'$(Version)' == ''">$(TPVersionPrefix)-dev</Version>
+
+    <!-- Override the AssemblyVersion as 15.0.0 since protocol depends on this version for
+         serialization. This is also defined in build script. -->
+    <AssemblyVersion Condition="'$(AssemblyVersion)' == ''">15.0.0</AssemblyVersion>
+
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <PublicSign Condition="'$(CIBuild)' == '' or '$(CIBuild)' == 'false'">true</PublicSign>
+    <DelaySign Condition="'$(CIBuild)' == 'true'">true</DelaySign>
+    <!--<GenerateDocumentationFile>true</GenerateDocumentationFile>-->
+    <AssemblyOriginatorKeyFile>$(RepositoryScriptsDir)key.snk</AssemblyOriginatorKeyFile>
+    <SignAssembly>true</SignAssembly>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+
+    <!-- Disable default inclusion of .resx file. We generate files in the Resources directory only
+         if localization is enabled, default inclusion ends up including the generated files by default. -->
+    <EnableDefaultEmbeddedResourceItems>false</EnableDefaultEmbeddedResourceItems>
+  </PropertyGroup>
+
+  <!-- Package dependency versions -->
+  <Import Project="$(RepositoryEngineeringDir)TestPlatform.Dependencies.props" />
+
+  <!-- Code analysis settings -->
+  <PropertyGroup>
+    <!-- Disable code analysis by default. Ignore SA0001 until we've xml documentation enabled for
+         all projects -->
+    <EnableCodeAnalysis>false</EnableCodeAnalysis>
+    <NoWarn>$(NoWarn);SA0001</NoWarn>
+    <CodeAnalysisRuleSet>$(RepositoryScriptsDir)stylecop.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="$(RepositoryScriptsDir)stylecop.json" LInk="stylecop.json" />
+  </ItemGroup>
+</Project>

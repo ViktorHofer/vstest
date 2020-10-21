@@ -33,7 +33,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Package", "Package", "{D27E
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.TestPlatform.PlatformAbstractions", "src\Microsoft.TestPlatform.PlatformAbstractions\Microsoft.TestPlatform.PlatformAbstractions.csproj", "{CAE652AF-6801-425E-AAF3-AB20DE7DF88E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "package", "src\package\package\package.csproj", "{E141A226-CC0A-4F26-BD17-4AE427D81C3B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "package", "src\package\package\package.proj", "{E141A226-CC0A-4F26-BD17-4AE427D81C3B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.TestPlatform.TestHostProvider", "src\Microsoft.TestPlatform.TestHostProvider\Microsoft.TestPlatform.TestHostProvider.csproj", "{11ECCB8B-6958-42A7-BD58-88C09CB149B2}"
 EndProject

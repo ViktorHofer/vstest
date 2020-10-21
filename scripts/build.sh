@@ -284,7 +284,7 @@ function publish_package()
         local framework="${fxpkg%%:*}"
         local packageDir="${fxpkg##*:}"
         local projects=( \
-            $TP_PACKAGE_PROJ_DIR/package.csproj \
+            $TP_PACKAGE_PROJ_DIR/package.proj \
             $TP_ROOT_DIR/src/vstest.console/vstest.console.csproj \
             $TP_ROOT_DIR/src/datacollector/datacollector.csproj
         )

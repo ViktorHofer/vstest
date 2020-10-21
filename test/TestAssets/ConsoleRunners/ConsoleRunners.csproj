@@ -1,9 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <!-- Package dependency versions -->
-  <Import Project="..\..\..\scripts\build\TestPlatform.Dependencies.props" />
   <PropertyGroup>
     <TargetFrameworks>netcoreapp2.1;net452</TargetFrameworks>
-    <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>

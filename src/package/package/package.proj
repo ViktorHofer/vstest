@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.Build.Traversal">
+  <ItemGroup>
+    <ProjectReference Include="$(RepositorySrcDir)Microsoft.TestPlatform.Client\Microsoft.TestPlatform.Client.csproj" />
+    <ProjectReference Include="$(RepositorySrcDir)Microsoft.TestPlatform.Common\Microsoft.TestPlatform.Common.csproj" />
+    <ProjectReference Include="$(RepositorySrcDir)Microsoft.TestPlatform.CommunicationUtilities\Microsoft.TestPlatform.CommunicationUtilities.csproj" />
+    <ProjectReference Include="$(RepositorySrcDir)Microsoft.TestPlatform.CoreUtilities\Microsoft.TestPlatform.CoreUtilities.csproj" />
+    <ProjectReference Include="$(RepositorySrcDir)Microsoft.TestPlatform.CrossPlatEngine\Microsoft.TestPlatform.CrossPlatEngine.csproj" />
+    <ProjectReference Include="$(RepositorySrcDir)Microsoft.TestPlatform.ObjectModel\Microsoft.TestPlatform.ObjectModel.csproj" />
+    <ProjectReference Include="$(RepositorySrcDir)vstest.console\vstest.console.csproj" />
+    <ProjectReference Include="$(RepositorySrcDir)Microsoft.TestPlatform.VsTestConsole.TranslationLayer\Microsoft.TestPlatform.VsTestConsole.TranslationLayer.csproj" />
+    <ProjectReference Include="$(RepositorySrcDir)Microsoft.TestPlatform.Extensions.TrxLogger\Microsoft.TestPlatform.Extensions.TrxLogger.csproj" />
+    <ProjectReference Include="$(RepositorySrcDir)Microsoft.TestPlatform.Extensions.HtmlLogger\Microsoft.TestPlatform.Extensions.HtmlLogger.csproj" />
+    <ProjectReference Include="$(RepositorySrcDir)Microsoft.TestPlatform.TestHostProvider\Microsoft.TestPlatform.TestHostProvider.csproj" />
+    <ProjectReference Include="$(RepositorySrcDir)Microsoft.TestPlatform.Utilities\Microsoft.TestPlatform.Utilities.csproj" FromP2P="true" />
+  </ItemGroup>
+</Project>

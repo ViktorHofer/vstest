@@ -1,6 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <!-- Package dependency versions -->
-  <Import Project="..\..\..\..\scripts\build\TestPlatform.Dependencies.props" />
   <PropertyGroup>
     <TargetFrameworks>netcoreapp2.1;net451</TargetFrameworks>
   </PropertyGroup>
@@ -12,22 +10,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="NunitTests.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>NunitTests.cs</LastGenOutput>
-    </None>
+    <None Update="NunitTests.tt"
+          Generator="TextTemplatingFileGenerator"
+          LastGenOutput="NunitTests.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+    <Compile Update="NunitTests.cs"
+             DesignTime="True"
+             AutoGen="True"
+             DependentUpon="NunitTests.tt" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Compile Update="NunitTests.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>NunitTests.tt</DependentUpon>
-    </Compile>
-  </ItemGroup>
-
 </Project>

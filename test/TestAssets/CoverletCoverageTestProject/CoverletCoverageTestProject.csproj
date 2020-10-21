@@ -1,9 +1,4 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <!-- Imports Common TestAssets props. -->
-  <Import Project="..\..\..\scripts\build\TestAssets.props" />
-  <Import Project="..\..\..\scripts\build\TestPlatform.Dependencies.props" />
-  <!-- Package dependency versions -->
-
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <IsPackable>false</IsPackable>
@@ -15,5 +10,4 @@
     <PackageReference Include="xunit.runner.visualstudio" Version="$(XUnitAdapterVersion)" />
     <PackageReference Include="coverlet.collector" Version="$(CoverletCoverageVersion)" />
   </ItemGroup>
-
 </Project>

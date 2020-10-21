@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.Build.Traversal">
+  <ItemGroup>
+    <ProjectReference Include="$(MSBuildThisFileDirectory)**\*.*proj"
+                      Exclude="testhost\*.csproj;
+                               testhost.x86\*.csproj;
+                               package\**\*.*proj" />
+  </ItemGroup>
+</Project>
